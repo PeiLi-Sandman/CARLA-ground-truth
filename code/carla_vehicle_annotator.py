@@ -1,15 +1,3 @@
-### Functions to extract 2D vehicle Bounding Box from CARLA
-### By Mukhlas Adib
-### Based example from CARLA Github client_bounding_boxes.py
-### 2020
-### Last tested on CARLA 0.9.10.1
-
-### All of functions in PART 1 and PART 2 are copied from client_bounding_boxes.py example
-### Except functions that convert 3D bounding boxes to 2D bounding boxes
-### CARLA Simulator and client_bounding_boxes.py are licensed under the terms of the MIT license
-### For a copy, see <https://opensource.org/licenses/MIT>
-### For more information about CARLA Simulator, visit https://carla.org/
-
 from turtle import width
 import numpy as np
 import PIL

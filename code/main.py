@@ -1,13 +1,3 @@
-### Example program to save several sensor data including bounding box
-### Sensors: RGB Camera (+BoundingBox), Semantic Lidar
-### By Mukhlas Adib
-### 2020
-### Last tested on CARLA 0.9.10.1
-
-### CARLA Simulator is licensed under the terms of the MIT license
-### For a copy, see <https://opensource.org/licenses/MIT>
-### For more information about CARLA Simulator, visit https://carla.org/
-
 import glob
 import os
 import sys
@@ -104,68 +94,12 @@ def main(car_model, cam_height, veh_location, veh_orientation):
             synchronous_master = False
 
         blueprints = world.get_blueprint_library().filter('vehicle.[fam]*')
-        # blueprint2 = world.get_blueprint_library().filter('vehicle.audi*')
-        # blueprints = blueprint1.append(blueprint2)
-        print(blueprints, type(blueprints))
-        # spawn_points = world.get_map().get_spawn_points()
-        # number_of_spawn_points = len(spawn_points)
-        #
-        # if args.number_of_vehicles < number_of_spawn_points:
-        #     random.shuffle(spawn_points)
-        # elif args.number_of_vehicles > number_of_spawn_points:
-        #     msg = 'Requested %d vehicles, but could only find %d spawn points'
-        #     logging.warning(msg, args.number_of_vehicles, number_of_spawn_points)
-        #     args.number_of_vehicles = number_of_spawn_points
-        #
-        # SpawnActor = carla.command.SpawnActor
-        # SetAutopilot = carla.command.SetAutopilot
-        # FutureActor = carla.command.FutureActor
-        #
-        # # --------------
-        # # Spawn vehicles
-        # # --------------
-        # batch = []
-        # for n, transform in enumerate(spawn_points):
-        #     if n >= args.number_of_vehicles:
-        #         break
-        #     blueprint = random.choice(blueprints)
-        #     if blueprint.has_attribute('color'):
-        #         color = random.choice(blueprint.get_attribute('color').recommended_values)
-        #         blueprint.set_attribute('color', color)
-        #     if blueprint.has_attribute('driver_id'):
-        #         driver_id = random.choice(blueprint.get_attribute('driver_id').recommended_values)
-        #         blueprint.set_attribute('driver_id', driver_id)
-        #     blueprint.set_attribute('role_name', 'autopilot')
-        #     batch.append(SpawnActor(blueprint, transform).then(SetAutopilot(FutureActor, True)))
-        #     spawn_points.pop(0)
-        #
-        # for response in client.apply_batch_sync(batch, synchronous_master):
-        #     if response.error:
-        #         logging.error(response.error)
-        #     else:
-        #         vehicles_list.append(response.actor_id)
-        #
-        # print('Created %d npc vehicles \n' % len(vehicles_list))
-
+        
         # -----------------------------
         # Spawn ego vehicle and sensors
         # -----------------------------
         q_list = []
         idx = 0
-
-        # tick_queue = queue.Queue()
-        # world.on_tick(tick_queue.put)
-        # q_list.append(tick_queue)
-        # tick_idx = idx
-        # idx = idx + 1
-        #
-        # # Spawn ego vehicle
-        # ego_bp = random.choice(blueprints)
-        # ego_transform = random.choice(spawn_points)
-        # ego_vehicle = world.spawn_actor(ego_bp, ego_transform)
-        # vehicles_list.append(ego_vehicle)
-        # ego_vehicle.set_autopilot(True)
-        # print('Ego-vehicle ready')
 
         # Spawn a traffic light
         traffic_light = world.get_actors().filter('traffic.traffic_light*')[2]
@@ -293,16 +227,8 @@ def main(car_model, cam_height, veh_location, veh_orientation):
                 if save_darknet: cva.save2darknet(filtered_out['bbox'], filtered_out['class'], rgb_img, file_name="{}_{}_{}_{}".format(car_model, cam_height, veh_location, veh_orientation))
                 print("wait")
                 time_sim = time_sim + 1
-            # else:
-            # print(time_sim)
-            # if time_sim <=1:
-            #     time_sim = time_sim + settings.fixed_delta_seconds
-            # elif time_sim < 1:
-            #     time_sim = time_sim + settings.fixed_delta_seconds
             else:
                 break
-            # print(time_sim)
-            # time_sim = time_sim + settings.fixed_delta_seconds
             print(time_sim)
     finally:
         try:
@@ -326,29 +252,6 @@ def main(car_model, cam_height, veh_location, veh_orientation):
         print('destroying %d nonvehicles' % len(nonvehicles_list))
         client.apply_batch([carla.command.DestroyActor(x) for x in nonvehicles_list])
         time.sleep(0.5)
-    # finally:
-    #     try:
-    #         if save_darknet: cva.save2darknet(None, None, None, save_train=True)
-    #     except:
-    #         print('No darknet formatted data directory found')
-    #     try:
-    #         cam.stop()
-    #         lidar.stop()
-    #     except:
-    #         print('Sensors has not been initiated')
-    #
-    #     settings = world.get_settings()
-    #     settings.synchronous_mode = False
-    #     settings.fixed_delta_seconds = None
-    #     world.apply_settings(settings)
-    #
-    #     print('\ndestroying %d vehicles' % len(vehicles_list))
-    #     client.apply_batch([carla.command.DestroyActor(x) for x in vehicles_list])
-    #
-    #     print('destroying %d nonvehicles' % len(nonvehicles_list))
-    #     client.apply_batch([carla.command.DestroyActor(x) for x in nonvehicles_list])
-    #
-    #     time.sleep(0.5)
 
 if __name__ == '__main__':
     try:
