@@ -18,7 +18,7 @@ make launch
 
 The following figure shows an example of the bounding box genearated by the project. The blue box is the 3D bounding box, the green box is the raw 2D bounding box generated based on the 3D bouding box, and the red box is the improved 2D bouding box using the semantic segmentation image.
 
-![](https://github.com/PeiLi-Sandman/CARLA-ground-truth/tree/main/imgs/yolo_6_11_10.png)
+![](https://github.com/PeiLi-Sandman/CARLA-ground-truth/blob/main/imgs/yolo_6_11_10.png)
 
 
 # References
