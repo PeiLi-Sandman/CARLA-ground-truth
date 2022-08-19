@@ -20,6 +20,9 @@ The following figure shows an example of the bounding box genearated by the proj
 
 ![](https://github.com/PeiLi-Sandman/CARLA-ground-truth/blob/main/imgs/yolo_6_11_10.png)
 
+# Data
+
+The data generated from this project can be downloaded using this [link](https://drive.google.com/drive/folders/1ir1tzqyVAABrzpU0MBsKFmbhxnN_TEw-?usp=sharing). The folder contains three sub-folders, the image folder, the bounding box folder, and the image annotated using bounding box folder.
 
 # References
 
