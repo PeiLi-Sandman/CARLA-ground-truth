@@ -43,7 +43,7 @@ def retrieve_data(sensor_queue, frame, timeout=1):
             return data
 
 
-def main(car_model, cam_height, veh_location, veh_orientation):
+def main(folder, cam_height, veh_location, veh_orientation):
     argparser = argparse.ArgumentParser(
         description=__doc__)
     argparser.add_argument(
@@ -214,17 +214,17 @@ def main(car_model, cam_height, veh_location, veh_orientation):
 
                 # Calculating visible bounding boxes
                 filtered_out, _ = cva.auto_annotate_lidar(vehicles, cam, rgb_img, lidar_img, seg_img, show_img=rgb_img,
-                                                          file_name="{}_{}_{}_{}".format(car_model, cam_height, veh_location, veh_orientation),
+                                                          file_name="{}_{}_{}_{}".format(folder, cam_height, veh_location, veh_orientation),
                                                           json_path='vehicle_class_json_file.txt')
 
                 # Save the results
                 cva.save_output(rgb_img, seg_img_old, filtered_out['bbox'], filtered_out['old_bbox'],
                                 filtered_out['3d_bbox'], filtered_out['class'], path='yolo_',
-                                file_name="{}_{}_{}_{}".format(car_model, cam_height, veh_location, veh_orientation), save_patched=True,
+                                file_name="{}_{}_{}_{}".format(folder, cam_height, veh_location, veh_orientation), save_patched=True,
                                 out_format='json')
 
                 # Save the results to darknet format
-                if save_darknet: cva.save2darknet(filtered_out['bbox'], filtered_out['class'], rgb_img, file_name="{}_{}_{}_{}".format(car_model, cam_height, veh_location, veh_orientation))
+                if save_darknet: cva.save2darknet(filtered_out['bbox'], filtered_out['class'], rgb_img, file_name="{}_{}_{}_{}".format(folder, cam_height, veh_location, veh_orientation))
                 print("wait")
                 time_sim = time_sim + 1
             else:
@@ -258,7 +258,7 @@ if __name__ == '__main__':
         for cam_height in [6]:
             for veh_distance in range(11, 30):
                 for veh_orientation in range(10, 370, 10):
-                    main(car_model="yolo", cam_height=cam_height, veh_location=veh_distance, veh_orientation=veh_orientation)
+                    main(folder="yolo", cam_height=cam_height, veh_location=veh_distance, veh_orientation=veh_orientation)
     except KeyboardInterrupt:
         pass
     finally:
